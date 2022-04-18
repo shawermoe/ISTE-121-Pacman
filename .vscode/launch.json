@@ -1,0 +1,22 @@
+{
+  // Use IntelliSense to learn about possible attributes.
+  // Hover to view descriptions of existing attributes.
+  // For more information, visit: https://go.microsoft.com/fwlink/?linkid=830387
+  "version": "0.2.0",
+  "configurations": [
+    {
+      "type": "java",
+      "name": "Launch Current File",
+      "request": "launch",
+      "mainClass": "${file}",
+      "vmArgs": "--module-path /Users/moe/Desktop/RIT/ISTE-121/javafx-sdk-17.0.1/lib --add-modules javafx.controls"
+    },
+    {
+      "type": "java",
+      "name": "Launch Game2DSTARTER",
+      "request": "launch",
+      "mainClass": "Game2DSTARTER",
+      "projectName": "GameProject_Starter_51c28842"
+    }
+  ]
+}

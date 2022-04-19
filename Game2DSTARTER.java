@@ -32,10 +32,10 @@ public class Game2DSTARTER extends Application implements EventHandler<KeyEvent>
 
    private final static String ICON_IMAGE = "pacman.png"; // file with icon for a racer
 
-   private int iconWidth; // width (in pixels) of the icon
-   private int iconHeight; // height (in pixels) or the icon
+   // private int iconWidth; // width (in pixels) of the icon
+   // private int iconHeight; // height (in pixels) or the icon
    private Pacman racer = null; // array of racers
-   private Image carImage = null;
+   // private Image carImage = null;
 
    private AnimationTimer timer; // timer to control animation
 
@@ -66,18 +66,6 @@ public class Game2DSTARTER extends Application implements EventHandler<KeyEvent>
 
    // start the race
    public void initializeScene() {
-
-      // Make an icon image to find its size
-      try {
-         carImage = new Image(new FileInputStream(ICON_IMAGE));
-      } catch (Exception e) {
-         System.out.println("Exception: " + e);
-         System.exit(1);
-      }
-
-      // Get image size
-      iconWidth = (int) carImage.getWidth();
-      iconHeight = (int) carImage.getHeight();
 
       racer = new Pacman();
       root.getChildren().add(racer);

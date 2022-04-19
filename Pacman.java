@@ -27,20 +27,21 @@ public class Pacman extends Pane {
     private Image aPic;
     private ImageView picView;
 
+    // Constructor for the Pacman character
     public Pacman() {
         // Drawing the icon
         try {
-            aPic = new Image(new FileInputStream(new File("pacman.png")));
+            aPic = new Image(new FileInputStream(new File("./ISTE-121-Pacman/assets/pacman.png")));
         } catch (FileNotFoundException fnfe) {
-            // TODO Auto-generated catch block
             fnfe.printStackTrace();
         }
-
         picView = new ImageView(aPic);
 
+        // Adding the Pacman character to the pane
         this.getChildren().add(picView);
     }
 
+    // Sets the direction of the Pacman character
     public void setDirection(int rotation) {
         this.pacmanRotation = rotation;
     }

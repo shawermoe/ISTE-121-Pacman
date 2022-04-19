@@ -22,7 +22,7 @@ import java.util.*;
  * @author - Mohamed Amgad
  */
 
-public class Game2DSTARTER extends Application implements EventHandler<KeyEvent> {
+public class GameStarter extends Application implements EventHandler<KeyEvent> {
    // Window attributes
    private Stage stage;
    private Scene scene;
@@ -34,7 +34,7 @@ public class Game2DSTARTER extends Application implements EventHandler<KeyEvent>
 
    private int iconWidth; // width (in pixels) of the icon
    private int iconHeight; // height (in pixels) or the icon
-   private Pacman racer = null; // array of racers
+   private PacmanRacer racer = null; // array of racers
    private Image carImage = null;
 
    private AnimationTimer timer; // timer to control animation
@@ -79,7 +79,7 @@ public class Game2DSTARTER extends Application implements EventHandler<KeyEvent>
       iconWidth = (int) carImage.getWidth();
       iconHeight = (int) carImage.getHeight();
 
-      racer = new Pacman();
+      racer = new PacmanRacer();
       root.getChildren().add(racer);
       root.setId("pane");
 
@@ -97,6 +97,7 @@ public class Game2DSTARTER extends Application implements EventHandler<KeyEvent>
       timer = new AnimationTimer() {
          public void handle(long now) {
             racer.update();
+            // System.out.println("He");
          }
       };
 
@@ -115,33 +116,86 @@ public class Game2DSTARTER extends Application implements EventHandler<KeyEvent>
     * Racer creates the race lane (Pane) and the ability to
     * keep itself going (Runnable)
     */
+   protected class PacmanRacer extends Pane {
+      private int racePosX = 0; // x position of the racer
+      private int racePosY = 0; // x position of the racer
+      private int raceROT = 0; // x position of the racer
+      private ImageView aPicView; // a view of the icon ... used to display and move the image
+
+      public PacmanRacer() {
+         // Draw the icon for the racer
+         aPicView = new ImageView(carImage);
+         this.getChildren().add(aPicView);
+      }
+
+      /**
+       * update() method keeps the thread (racer) alive and moving.
+       */
+      public void update() {
+         // racePosX += (int) (Math.random() * iconWidth / 30);
+         // racePosY += (int) (Math.random() * iconWidth / 30);
+         aPicView.setTranslateX(racePosX);
+         aPicView.setTranslateY(racePosY);
+         aPicView.setRotate(raceROT);
+
+         // if (racePosX > 800)
+         // racePosX = 0;
+         // if (racePosY > 500)
+         // racePosY = 0;
+         // raceROT += 1;
+
+      } // end update()
+
+      public void goUp() {
+         racer.racePosY -= 10;
+         raceROT = -90;
+      }
+
+      public void goRight() {
+         racer.racePosX += 10;
+
+         raceROT = 0;
+
+      }
+
+      public void goDown() {
+         racer.racePosY += 10;
+         raceROT = 90;
+
+      }
+
+      public void goLeft() {
+         racer.racePosX -= 10;
+         raceROT = 180;
+
+      }
+   } // end inner class Racer
 
    @Override
    public void handle(KeyEvent ke) {
       switch (ke.getCode()) {
          case W:
          case UP:
-            racer.setDirection(-90);
+            racer.goUp();
             break;
 
          case D:
          case RIGHT:
-            racer.setDirection(0);
+            racer.goRight();
             break;
 
          case S:
          case DOWN:
-            racer.setDirection(90);
+            racer.goDown();
             break;
 
          case A:
          case LEFT:
-            racer.setDirection(180);
+            racer.goLeft();
             break;
 
          default:
             break;
       }
    }
-
 } // end class Races

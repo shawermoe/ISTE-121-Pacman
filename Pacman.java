@@ -1,7 +1,8 @@
+
+// All neccessary imports
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
-
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.Pane;
@@ -31,7 +32,7 @@ public class Pacman extends Pane {
     public Pacman() {
         // Drawing the icon
         try {
-            aPic = new Image(new FileInputStream(new File("./ISTE-121-Pacman/assets/pacman.png")));
+            aPic = new Image(new FileInputStream(new File("ISTE-121-Pacman/assets/races.gif")));
         } catch (FileNotFoundException fnfe) {
             fnfe.printStackTrace();
         }
@@ -50,25 +51,32 @@ public class Pacman extends Pane {
     public void update() {
 
         switch (this.pacmanRotation) {
+            // Case when Pacman is facing up
             case -90:
-                this.pacmanY -= 5;
+                this.pacmanY -= 3.5;
                 break;
 
+            // Case when Pacman is facing right
             case 0:
-                this.pacmanX += 5;
+                this.pacmanX += 3.5;
                 break;
 
+            // Case when Pacman is facing down
             case 90:
-                this.pacmanY += 5;
+                this.pacmanY += 3.5;
                 break;
 
+            // Case when Pacman is facing left
             case 180:
-                this.pacmanX -= 5;
+                this.pacmanX -= 3.5;
                 break;
+
+            // Default is empty since there's no other possible values
             default:
                 break;
         }
 
+        // Setting the position and rotation of the Pacman character
         picView.setTranslateX(this.pacmanX);
         picView.setTranslateY(this.pacmanY);
         picView.setRotate(this.pacmanRotation);

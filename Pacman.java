@@ -49,7 +49,6 @@ public class Pacman extends Pane {
 
     // Method to update the pacman's position and rotation
     public void update() {
-
         switch (this.pacmanRotation) {
             // Case when Pacman is facing up
             case -90:
@@ -75,10 +74,57 @@ public class Pacman extends Pane {
             default:
                 break;
         }
-
         // Setting the position and rotation of the Pacman character
         picView.setTranslateX(this.pacmanX);
         picView.setTranslateY(this.pacmanY);
         picView.setRotate(this.pacmanRotation);
+    }
+
+    public double nextX() {
+        switch (this.pacmanRotation) {
+            // Case when Pacman is facing up
+            case -90:
+                return this.pacmanX;
+
+            // Case when Pacman is facing right
+            case 0:
+                return this.pacmanX + 3.5;
+
+            // Case when Pacman is facing down
+            case 90:
+                return this.pacmanX;
+
+            // Case when Pacman is facing left
+            case 180:
+                return this.pacmanX - 3.5;
+
+            // Default is empty since there's no other possible values
+            default:
+                return 0.0;
+        }
+    }
+
+    public double nextY() {
+        switch (this.pacmanRotation) {
+            // Case when Pacman is facing up
+            case -90:
+                return this.pacmanY - 3.5;
+
+            // Case when Pacman is facing right
+            case 0:
+                return this.pacmanY;
+
+            // Case when Pacman is facing down
+            case 90:
+                return this.pacmanY + 3.5;
+
+            // Case when Pacman is facing left
+            case 180:
+                return this.pacmanY;
+
+            // Default is empty since there's no other possible values
+            default:
+                return 0.0;
+        }
     }
 }

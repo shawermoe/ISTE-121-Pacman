@@ -3,11 +3,16 @@
 import javafx.application.*;
 import javafx.event.*;
 import javafx.scene.*;
+import javafx.scene.image.Image;
+import javafx.scene.image.ImageView;
+import javafx.scene.image.PixelReader;
 import javafx.scene.input.KeyEvent;
 import javafx.scene.layout.*;
+import javafx.scene.paint.Color;
 import javafx.stage.*;
 import javafx.animation.*;
 
+import java.io.*;
 import java.util.*;
 
 /**
@@ -21,11 +26,13 @@ import java.util.*;
 public class Game2DSTARTER extends Application implements EventHandler<KeyEvent> {
    // Window attributes
    private Stage stage;
-   private VBox root;
+   private StackPane root;
 
    private Pacman racer = null; // array of racers
 
    private AnimationTimer timer; // timer to control animation
+   private Image map;
+   private PixelReader pr;
 
    // main program
    public static void main(String[] args) {
@@ -41,7 +48,7 @@ public class Game2DSTARTER extends Application implements EventHandler<KeyEvent>
             evt -> System.exit(0));
 
       // root pane
-      root = new VBox();
+      root = new StackPane();
 
       // create an array of Racers (Panes) and start
       initializeScene();
@@ -51,12 +58,18 @@ public class Game2DSTARTER extends Application implements EventHandler<KeyEvent>
    public void initializeScene() {
 
       racer = new Pacman();
-      root.getChildren().add(racer);
-      root.setId("pane");
+      try {
+         map = new Image(new FileInputStream(new File("ISTE-121-Pacman/assets/test.jpeg")));
+         pr = map.getPixelReader();
+         root.getChildren().add(new ImageView(map));
+      } catch (FileNotFoundException e) {
+         e.printStackTrace();
+      }
 
+      root.getChildren().add(racer);
       // display the window
       Scene scene = new Scene(root, 800, 500);
-      scene.getStylesheets().addAll(this.getClass().getResource("style.css").toExternalForm());
+
       stage.setScene(scene);
       stage.show();
 
@@ -67,7 +80,8 @@ public class Game2DSTARTER extends Application implements EventHandler<KeyEvent>
       // Use an animation to update the screen
       timer = new AnimationTimer() {
          public void handle(long now) {
-            racer.update();
+            if (!checkCollision())
+               racer.update();
          }
       };
 
@@ -80,6 +94,16 @@ public class Game2DSTARTER extends Application implements EventHandler<KeyEvent>
       Timer startTimer = new Timer();
       long delay = 1000L;
       startTimer.schedule(task, delay);
+   }
+
+   public boolean checkCollision() {
+      Color check1 = pr.getColor((int) racer.nextX(), (int) racer.nextY());
+      Color check2 = pr.getColor((int) (racer.nextX() + racer.getaPic().getWidth()), (int) racer.nextY());
+      Color check3 = pr.getColor((int) (racer.nextX() + racer.getaPic().getWidth()),
+            (int) (racer.nextY() + racer.getaPic().getHeight()));
+      Color check4 = pr.getColor((int) racer.nextX(), (int) (racer.nextY() + racer.getaPic().getHeight()));
+
+      return check1.getRed() > 0.9 || check2.getRed() > 0.9 || check3.getRed() > 0.9 || check4.getRed() > 0.9;
    }
 
    /**

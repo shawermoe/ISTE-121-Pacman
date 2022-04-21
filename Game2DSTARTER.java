@@ -11,7 +11,6 @@ import javafx.scene.layout.*;
 import javafx.scene.paint.Color;
 import javafx.stage.*;
 import javafx.animation.*;
-
 import java.io.*;
 import java.util.*;
 
@@ -28,11 +27,10 @@ public class Game2DSTARTER extends Application implements EventHandler<KeyEvent>
    private Stage stage;
    private StackPane root;
 
-   private Pacman racer = null; // array of racers
-
-   private AnimationTimer timer; // timer to control animation
-   private Image map;
-   private PixelReader pr;
+   // Pacman attributes
+   private Pacman racer; // The pacman
+   private AnimationTimer timer; // Timer to control animation
+   private PixelReader pr; // PixelReader to implement collision
 
    // main program
    public static void main(String[] args) {
@@ -43,11 +41,11 @@ public class Game2DSTARTER extends Application implements EventHandler<KeyEvent>
    public void start(Stage stage) {
       // stage seteup
       this.stage = stage;
-      stage.setTitle("Game2D Starter");
+      stage.setTitle("Pacman - Kiara & Moe");
       stage.setOnCloseRequest(
             evt -> System.exit(0));
 
-      // root pane
+      // Stackpane pane
       root = new StackPane();
 
       // create an array of Racers (Panes) and start
@@ -57,24 +55,30 @@ public class Game2DSTARTER extends Application implements EventHandler<KeyEvent>
    // start the race
    public void initializeScene() {
 
+      // The Pacman object
       racer = new Pacman();
+
       try {
-         map = new Image(new FileInputStream(new File("ISTE-121-Pacman/assets/test.jpeg")));
+         // Adding the background
+         Image map = new Image(new FileInputStream(new File("ISTE-121-Pacman/assets/test.jpeg")));
          pr = map.getPixelReader();
          root.getChildren().add(new ImageView(map));
       } catch (FileNotFoundException e) {
          e.printStackTrace();
       }
 
+      // Adding the pacman
       root.getChildren().add(racer);
+
       // display the window
       Scene scene = new Scene(root, 800, 500);
-
       stage.setScene(scene);
       stage.show();
 
+      // Adding keyboard functionality
       scene.setOnKeyPressed(this);
 
+      // Used for testing purposes
       System.out.println("Starting race...");
 
       // Use an animation to update the screen
@@ -98,19 +102,20 @@ public class Game2DSTARTER extends Application implements EventHandler<KeyEvent>
 
    public boolean checkCollision() {
       Color check1 = pr.getColor((int) racer.nextX(), (int) racer.nextY());
-      Color check2 = pr.getColor((int) (racer.nextX() + racer.getaPic().getWidth()), (int) racer.nextY());
-      Color check3 = pr.getColor((int) (racer.nextX() + racer.getaPic().getWidth()),
-            (int) (racer.nextY() + racer.getaPic().getHeight()));
-      Color check4 = pr.getColor((int) racer.nextX(), (int) (racer.nextY() + racer.getaPic().getHeight()));
+      Color check2 = pr.getColor((int) (racer.nextX() + racer.getIcon().getWidth()), (int) racer.nextY());
+      Color check3 = pr.getColor((int) (racer.nextX() + racer.getIcon().getWidth()),
+            (int) (racer.nextY() + racer.getIcon().getHeight()));
+      Color check4 = pr.getColor((int) racer.nextX(), (int) (racer.nextY() + racer.getIcon().getHeight()));
 
       return check1.getRed() > 0.9 || check2.getRed() > 0.9 || check3.getRed() > 0.9 || check4.getRed() > 0.9;
    }
 
-   /**
-    * Racer creates the race lane (Pane) and the ability to
-    * keep itself going (Runnable)
+   /*
+    * Keyhandler which is used to grab events from the keyboard
+    * The functionality behind it revolves rotating the pacman
+    * With every key press. The controls involve W,A,S,D and
+    * the arrow keys.
     */
-
    @Override
    public void handle(KeyEvent ke) {
       switch (ke.getCode()) {

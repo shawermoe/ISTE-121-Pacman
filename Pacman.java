@@ -22,30 +22,44 @@ public class Pacman extends Pane {
     private double pacmanX = 10;
     private double pacmanY = 10;
 
-    private int speed = 3;
+    // Speed of the pacman
+    private int speed = 4;
 
+    // The pacman's rotation (direction they're facing)
     private int pacmanRotation;
 
     // Attributes to show the Pacman
-    private Image aPic;
+    private Image icon;
     private ImageView picView;
 
     // Constructor for the Pacman character
     public Pacman() {
 
-        // Drawing the icon
         try {
-            aPic = new Image(new FileInputStream(new File("ISTE-121-Pacman/assets/races.gif")));
+            // Drawing the icon
+            icon = new Image(new FileInputStream(new File("ISTE-121-Pacman/assets/races.gif")));
+            picView = new ImageView(icon);
+            picView.setTranslateX(pacmanX);
+            picView.setTranslateY(pacmanY);
+
+            // Adding the Pacman character to the pane
+            this.getChildren().add(picView);
+
         } catch (FileNotFoundException fnfe) {
             fnfe.printStackTrace();
         }
-        picView = new ImageView(aPic);
-
-        // Adding the Pacman character to the pane
-        this.getChildren().add(picView);
     }
 
-    // Sets the direction of the Pacman character
+    /**
+     * @return the image from the pacman object.
+     */
+    public Image getIcon() {
+        return icon;
+    }
+
+    /**
+     * @param rotation is direction of the pacman.
+     */
     public void setDirection(int rotation) {
         this.pacmanRotation = rotation;
     }
@@ -84,6 +98,10 @@ public class Pacman extends Pane {
         picView.setRotate(this.pacmanRotation);
     }
 
+    /**
+     * This method is used to calculate the next X coordinate of the pacman object
+     * based on the rotation or direction the pacman is facing
+     */
     public double nextX() {
         switch (this.pacmanRotation) {
             // Case when Pacman is facing up
@@ -108,6 +126,10 @@ public class Pacman extends Pane {
         }
     }
 
+    /**
+     * This method is used to calculate the next Y coordinate of the pacman object
+     * based on the rotation or direction the pacman is facing
+     */
     public double nextY() {
         switch (this.pacmanRotation) {
             // Case when Pacman is facing up
@@ -131,19 +153,4 @@ public class Pacman extends Pane {
                 return 0.0;
         }
     }
-
-    /**
-     * @return the aPic
-     */
-    public Image getaPic() {
-        return aPic;
-    }
-
-    /**
-     * @param aPic the aPic to set
-     */
-    public void setaPic(Image aPic) {
-        this.aPic = aPic;
-    }
-
 }

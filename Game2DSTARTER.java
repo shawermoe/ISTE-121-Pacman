@@ -1,18 +1,27 @@
 
 // All neccessary imports
-import javafx.application.*;
-import javafx.event.*;
-import javafx.scene.*;
+import java.io.File;
+import java.io.FileInputStream;
+import java.io.FileNotFoundException;
+
+import java.util.Timer;
+import java.util.TimerTask;
+
+import javafx.animation.AnimationTimer;
+
+import javafx.application.Application;
+
+import javafx.event.EventHandler;
+
+import javafx.scene.Scene;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.image.PixelReader;
 import javafx.scene.input.KeyEvent;
-import javafx.scene.layout.*;
+import javafx.scene.layout.StackPane;
 import javafx.scene.paint.Color;
-import javafx.stage.*;
-import javafx.animation.*;
-import java.io.*;
-import java.util.*;
+
+import javafx.stage.Stage;
 
 /**
  * PacmanGEOStarter with JavaFX and Thread
@@ -28,7 +37,7 @@ public class Game2DSTARTER extends Application implements EventHandler<KeyEvent>
    private StackPane root;
 
    // Pacman attributes
-   private Pacman racer; // The pacman
+   private Pacman pacman; // The pacman
    private AnimationTimer timer; // Timer to control animation
    private PixelReader pr; // PixelReader to implement collision
 
@@ -48,7 +57,7 @@ public class Game2DSTARTER extends Application implements EventHandler<KeyEvent>
       // Stackpane pane
       root = new StackPane();
 
-      // create an array of Racers (Panes) and start
+      // create an array of pacmans (Panes) and start
       initializeScene();
    }
 
@@ -56,7 +65,7 @@ public class Game2DSTARTER extends Application implements EventHandler<KeyEvent>
    public void initializeScene() {
 
       // The Pacman object
-      racer = new Pacman();
+      pacman = new Pacman();
 
       try {
          // Adding the background
@@ -68,8 +77,8 @@ public class Game2DSTARTER extends Application implements EventHandler<KeyEvent>
       }
 
       // Adding the pacman
-      root.getChildren().add(racer);
-
+      root.getChildren().add(pacman);
+      root.getChildren().addAll(new Ghost());
       // display the window
       Scene scene = new Scene(root, 800, 500);
       stage.setScene(scene);
@@ -85,7 +94,7 @@ public class Game2DSTARTER extends Application implements EventHandler<KeyEvent>
       timer = new AnimationTimer() {
          public void handle(long now) {
             if (!checkCollision())
-               racer.update();
+               pacman.update();
          }
       };
 
@@ -101,11 +110,11 @@ public class Game2DSTARTER extends Application implements EventHandler<KeyEvent>
    }
 
    public boolean checkCollision() {
-      Color check1 = pr.getColor((int) racer.nextX(), (int) racer.nextY());
-      Color check2 = pr.getColor((int) (racer.nextX() + racer.getIcon().getWidth()), (int) racer.nextY());
-      Color check3 = pr.getColor((int) (racer.nextX() + racer.getIcon().getWidth()),
-            (int) (racer.nextY() + racer.getIcon().getHeight()));
-      Color check4 = pr.getColor((int) racer.nextX(), (int) (racer.nextY() + racer.getIcon().getHeight()));
+      Color check1 = pr.getColor((int) pacman.nextX(), (int) pacman.nextY());
+      Color check2 = pr.getColor((int) (pacman.nextX() + pacman.getIcon().getWidth()), (int) pacman.nextY());
+      Color check3 = pr.getColor((int) (pacman.nextX() + pacman.getIcon().getWidth()),
+            (int) (pacman.nextY() + pacman.getIcon().getHeight()));
+      Color check4 = pr.getColor((int) pacman.nextX(), (int) (pacman.nextY() + pacman.getIcon().getHeight()));
 
       return check1.getRed() > 0.9 || check2.getRed() > 0.9 || check3.getRed() > 0.9 || check4.getRed() > 0.9;
    }
@@ -121,22 +130,22 @@ public class Game2DSTARTER extends Application implements EventHandler<KeyEvent>
       switch (ke.getCode()) {
          case W:
          case UP:
-            racer.setDirection(-90);
+            pacman.setDirection(-90);
             break;
 
          case D:
          case RIGHT:
-            racer.setDirection(0);
+            pacman.setDirection(0);
             break;
 
          case S:
          case DOWN:
-            racer.setDirection(90);
+            pacman.setDirection(90);
             break;
 
          case A:
          case LEFT:
-            racer.setDirection(180);
+            pacman.setDirection(180);
             break;
 
          default:

@@ -3,7 +3,7 @@
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
-
+import java.util.Random;
 import java.util.Timer;
 import java.util.TimerTask;
 
@@ -38,6 +38,10 @@ public class Game2DSTARTER extends Application implements EventHandler<KeyEvent>
 
    // Pacman attributes
    private Pacman pacman; // The pacman
+   private Ghost ghost; // The ghost
+
+   private int[] ghostDirections = { -90, 0, 90, 180 };
+
    private AnimationTimer timer; // Timer to control animation
    private PixelReader pr; // PixelReader to implement collision
 
@@ -67,6 +71,9 @@ public class Game2DSTARTER extends Application implements EventHandler<KeyEvent>
       // The Pacman object
       pacman = new Pacman();
 
+      // The Ghost object
+      ghost = new Ghost();
+
       try {
          // Adding the background
          Image map = new Image(new FileInputStream(new File("ISTE-121-Pacman/assets/test.jpeg")));
@@ -78,7 +85,7 @@ public class Game2DSTARTER extends Application implements EventHandler<KeyEvent>
 
       // Adding the pacman
       root.getChildren().add(pacman);
-      root.getChildren().addAll(new Ghost());
+      root.getChildren().addAll(ghost);
       // display the window
       Scene scene = new Scene(root, 800, 500);
       stage.setScene(scene);
@@ -95,6 +102,13 @@ public class Game2DSTARTER extends Application implements EventHandler<KeyEvent>
          public void handle(long now) {
             if (!checkCollision())
                pacman.update();
+            if (!ghostCheck()) {
+               ghost.update();
+
+            } else {
+               int direction = new Random().nextInt(ghostDirections.length);
+               ghost.setDirection(ghostDirections[direction]);
+            }
          }
       };
 
@@ -115,6 +129,17 @@ public class Game2DSTARTER extends Application implements EventHandler<KeyEvent>
       Color check3 = pr.getColor((int) (pacman.nextX() + pacman.getIcon().getWidth()),
             (int) (pacman.nextY() + pacman.getIcon().getHeight()));
       Color check4 = pr.getColor((int) pacman.nextX(), (int) (pacman.nextY() + pacman.getIcon().getHeight()));
+
+      return check1.getRed() > 0.9 || check2.getRed() > 0.9 || check3.getRed() > 0.9 || check4.getRed() > 0.9;
+
+   }
+
+   public boolean ghostCheck() {
+      Color check1 = pr.getColor((int) ghost.nextX(), (int) ghost.nextY());
+      Color check2 = pr.getColor((int) (ghost.nextX() + ghost.getIcon().getWidth()), (int) pacman.nextY());
+      Color check3 = pr.getColor((int) (ghost.nextX() + ghost.getIcon().getWidth()),
+            (int) (ghost.nextY() + ghost.getIcon().getHeight()));
+      Color check4 = pr.getColor((int) ghost.nextX(), (int) (ghost.nextY() + ghost.getIcon().getHeight()));
 
       return check1.getRed() > 0.9 || check2.getRed() > 0.9 || check3.getRed() > 0.9 || check4.getRed() > 0.9;
    }

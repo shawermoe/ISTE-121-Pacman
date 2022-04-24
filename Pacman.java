@@ -38,7 +38,7 @@ public class Pacman extends Pane {
 
         try {
             // Drawing the icon
-            icon = new Image(new FileInputStream(new File("ISTE-121-Pacman/assets/races.gif")));
+            icon = new Image(new FileInputStream(new File("ISTE-121-Pacman/assets/pacman.gif")));
             picView = new ImageView(icon);
             picView.setTranslateX(pacmanX);
             picView.setTranslateY(pacmanY);

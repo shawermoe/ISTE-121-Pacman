@@ -20,11 +20,11 @@ public class Pacman extends Pane {
     // Attributes for the pacman character
 
     // Position attributes
-    private double pacmanX = 10;
-    private double pacmanY = 10;
+    private double pacmanX = 230;
+    private double pacmanY = 300;
 
     // Speed of the pacman
-    private int speed = 4;
+    private int speed = 2;
 
     // The pacman's rotation (direction they're facing)
     private int pacmanRotation;
@@ -38,7 +38,7 @@ public class Pacman extends Pane {
 
         try {
             // Drawing the icon
-            icon = new Image(new FileInputStream(new File("ISTE-121-Pacman/assets/pacman.gif")));
+            icon = new Image(new FileInputStream(new File("ISTE-121-Pacman/assets/ezgif.com-gif-maker-4.gif")));
             picView = new ImageView(icon);
             picView.setTranslateX(pacmanX);
             picView.setTranslateY(pacmanY);
@@ -154,4 +154,19 @@ public class Pacman extends Pane {
                 return 0.0;
         }
     }
+
+    /**
+     * @return the picView
+     */
+    public ImageView getPicView() {
+        return picView;
+    }
+
+    /**
+     * @param picView the picView to set
+     */
+    public void setPicView(ImageView picView) {
+        this.picView = picView;
+    }
+
 }

@@ -9,10 +9,10 @@ import javafx.scene.layout.Pane;
 public class Ghost extends Pane {
 
     // Position attributes
-    private double ghostX = 70;
-    private double ghostY = 80;
+    private double ghostX = 245;
+    private double ghostY = 250;
 
-    private int speed = 4;
+    private int speed = 2;
     private int rotation;
 
     // Attributes for displaying the ghosts
@@ -22,7 +22,7 @@ public class Ghost extends Pane {
     public Ghost() {
         try {
             // Drawing the icon
-            icon = new Image(new FileInputStream(new File("ISTE-121-Pacman/assets/ghost.gif")));
+            icon = new Image(new FileInputStream(new File("ISTE-121-Pacman/assets/ghost1.gif")));
             picView = new ImageView(icon);
             picView.setTranslateX(ghostX);
             picView.setTranslateY(ghostY);
@@ -162,6 +162,20 @@ public class Ghost extends Pane {
      */
     public void setGhostY(double ghostY) {
         this.ghostY = ghostY;
+    }
+
+    /**
+     * @return the picView
+     */
+    public ImageView getPicView() {
+        return picView;
+    }
+
+    /**
+     * @param picView the picView to set
+     */
+    public void setPicView(ImageView picView) {
+        this.picView = picView;
     }
 
 }

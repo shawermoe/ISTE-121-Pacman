@@ -38,12 +38,15 @@ public class Game2DSTARTER extends Application implements EventHandler<KeyEvent>
 
    // Pacman attributes
    private Pacman pacman; // The pacman
-   private Ghost ghost; // The ghost
+   // private Ghost ghost; // The ghost
 
+   private Ghost[] ghosts = new Ghost[4];
    private int[] ghostDirections = { -90, 0, 90, 180 };
 
    private AnimationTimer timer; // Timer to control animation
    private PixelReader pr; // PixelReader to implement collision
+
+   private int test = 0;
 
    // main program
    public static void main(String[] args) {
@@ -72,11 +75,10 @@ public class Game2DSTARTER extends Application implements EventHandler<KeyEvent>
       pacman = new Pacman();
 
       // The Ghost object
-      ghost = new Ghost();
 
       try {
          // Adding the background
-         Image map = new Image(new FileInputStream(new File("ISTE-121-Pacman/assets/test.jpeg")));
+         Image map = new Image(new FileInputStream(new File("ISTE-121-Pacman/assets/map-5.jpg")));
          pr = map.getPixelReader();
          root.getChildren().add(new ImageView(map));
       } catch (FileNotFoundException e) {
@@ -85,9 +87,14 @@ public class Game2DSTARTER extends Application implements EventHandler<KeyEvent>
 
       // Adding the pacman
       root.getChildren().add(pacman);
-      root.getChildren().addAll(ghost);
+
+      for (int i = 0; i < ghosts.length; i++) {
+         ghosts[i] = new Ghost();
+         root.getChildren().add(ghosts[i]);
+      }
+
       // display the window
-      Scene scene = new Scene(root, 800, 500);
+      Scene scene = new Scene(root, 495, 660);
       stage.setScene(scene);
       stage.show();
 
@@ -102,13 +109,17 @@ public class Game2DSTARTER extends Application implements EventHandler<KeyEvent>
          public void handle(long now) {
             if (!checkCollision())
                pacman.update();
-            if (!ghostCheck()) {
-               ghost.update();
 
-            } else {
-               int direction = new Random().nextInt(ghostDirections.length);
-               ghost.setDirection(ghostDirections[direction]);
+            for (Ghost g : ghosts) {
+               if (!ghostCheck(g)) {
+                  g.update();
+                  test(g);
+               } else {
+                  int direction = new Random().nextInt(ghostDirections.length);
+                  g.setDirection(ghostDirections[direction]);
+               }
             }
+
          }
       };
 
@@ -134,7 +145,7 @@ public class Game2DSTARTER extends Application implements EventHandler<KeyEvent>
 
    }
 
-   public boolean ghostCheck() {
+   public boolean ghostCheck(Ghost ghost) {
       Color check1 = pr.getColor((int) ghost.nextX(), (int) ghost.nextY());
       Color check2 = pr.getColor((int) (ghost.nextX() + ghost.getIcon().getWidth()), (int) pacman.nextY());
       Color check3 = pr.getColor((int) (ghost.nextX() + ghost.getIcon().getWidth()),
@@ -142,6 +153,13 @@ public class Game2DSTARTER extends Application implements EventHandler<KeyEvent>
       Color check4 = pr.getColor((int) ghost.nextX(), (int) (ghost.nextY() + ghost.getIcon().getHeight()));
 
       return check1.getRed() > 0.9 || check2.getRed() > 0.9 || check3.getRed() > 0.9 || check4.getRed() > 0.9;
+   }
+
+   public void test(Ghost ghost) {
+      if (ghost.getPicView().getBoundsInParent().intersects(pacman.getPicView().getBoundsInParent())) {
+         test++;
+         System.out.println("Yay " + test);
+      }
    }
 
    /*

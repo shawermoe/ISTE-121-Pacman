@@ -1,25 +1,27 @@
 
 // All neccessary imports
+import javafx.animation.AnimationTimer;
+
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
-import java.io.IOException;
-import java.util.Random;
-import java.util.Timer;
-import java.util.TimerTask;
-
-import javafx.animation.AnimationTimer;
 
 import javafx.application.Application;
 import javafx.event.EventHandler;
+
+import java.util.List;
+import java.util.ArrayList;
+import java.util.Timer;
+import java.util.TimerTask;
+
 import javafx.geometry.Pos;
+
 import javafx.scene.Scene;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.image.PixelReader;
 import javafx.scene.input.KeyEvent;
 import javafx.scene.layout.StackPane;
-import javafx.scene.paint.Color;
 
 import javafx.stage.Stage;
 
@@ -31,19 +33,21 @@ import javafx.stage.Stage;
  * @author - Mohamed Amgad
  */
 
-public class Game extends Application implements EventHandler<KeyEvent> {
+public class SinglePlayer extends Application implements EventHandler<KeyEvent> {
    // Window attributes
    private Stage stage;
    private StackPane root;
    private int width = 495;
    private int height = 660;
 
+   private List<ImageView> coins = new ArrayList<>();
+
    // Pacman attributes
    private Pacman pacman; // The pacman
    // private Ghost ghost; // The ghost
 
+   // Arrays of ghost
    private Ghost[] ghosts = new Ghost[4];
-   private int[] ghostDirections = { -90, 0, 90, 180 };
 
    private AnimationTimer timer; // Timer to control animation
    private PixelReader pr; // PixelReader to implement collision
@@ -55,7 +59,7 @@ public class Game extends Application implements EventHandler<KeyEvent> {
 
    // start() method, called via launch
    public void start(Stage stage) {
-      // stage seteup
+      // stage set up
       this.stage = stage;
       stage.setTitle("Pacman - Kiara & Moe");
       stage.setOnCloseRequest(
@@ -64,6 +68,7 @@ public class Game extends Application implements EventHandler<KeyEvent> {
       // Stackpane pane
       root = new StackPane();
       root.setAlignment(Pos.TOP_LEFT);
+
       // create an array of pacmans (Panes) and start
       initializeScene();
    }
@@ -71,29 +76,36 @@ public class Game extends Application implements EventHandler<KeyEvent> {
    // start the race
    public void initializeScene() {
 
-      // The Pacman object
-      pacman = new Pacman();
-
       // The Ghost object
 
       try {
          // Adding the background
-         Image map = new Image(new FileInputStream(new File("ISTE-121-Pacman/assets/map-6.jpg")));
+         Image map = new Image(new FileInputStream(new File("ISTE-121-Pacman/assets/mapppp.jpg")));
          pr = map.getPixelReader();
          root.getChildren().add(new ImageView(map));
       } catch (FileNotFoundException e) {
          e.printStackTrace();
       }
+      // The Pacman object
+      try {
+         pacman = new Pacman(pr);
+      } catch (FileNotFoundException e1) {
+         e1.printStackTrace();
+      }
 
       // Adding the pacman
       root.getChildren().add(pacman);
 
-      for (int i = 0; i < ghosts.length; i++) {
-         ghosts[i] = new Ghost();
-         root.getChildren().add(ghosts[i]);
+      try {
+         for (int i = 0; i < ghosts.length; i++) {
+            ghosts[i] = new Ghost(pr);
+            root.getChildren().add(ghosts[i]);
+         }
+      } catch (FileNotFoundException e) {
+         e.printStackTrace();
       }
 
-      coins();
+      generateCoins(10);
 
       // display the window
       Scene scene = new Scene(root, width, height);
@@ -110,17 +122,18 @@ public class Game extends Application implements EventHandler<KeyEvent> {
       timer = new AnimationTimer() {
          public void handle(long now) {
 
-            if (!checkCollision()) {
+            if (!pacman.checkWallCollision()) {
                pacman.update();
             }
 
+            tst();
+
             for (Ghost g : ghosts) {
-               if (!ghostCheck(g)) {
+               if (!g.checkWallCollision()) {
                   g.update();
                   test(g);
                } else {
-                  int direction = new Random().nextInt(ghostDirections.length);
-                  g.setDirection(ghostDirections[direction]);
+                  g.randomDirection();
                }
             }
 
@@ -138,69 +151,28 @@ public class Game extends Application implements EventHandler<KeyEvent> {
       startTimer.schedule(task, delay);
    }
 
-   public boolean checkCollision() {
-      Color check1 = pr.getColor((int) pacman.nextX(), (int) pacman.nextY());
-      Color check2 = pr.getColor((int) (pacman.nextX() + pacman.getIcon().getWidth()), (int) pacman.nextY());
-      Color check3 = pr.getColor((int) (pacman.nextX() + pacman.getIcon().getWidth()),
-            (int) (pacman.nextY() + pacman.getIcon().getHeight()));
-      Color check4 = pr.getColor((int) pacman.nextX(), (int) (pacman.nextY() + pacman.getIcon().getHeight()));
-
-      return check1.getRed() > 0.9 || check2.getRed() > 0.9 || check3.getRed() > 0.9 || check4.getRed() > 0.9;
-
-   }
-
-   public boolean ghostCheck(Ghost ghost) {
-      Color check1 = pr.getColor((int) ghost.nextX(), (int) ghost.nextY());
-      Color check2 = pr.getColor((int) (ghost.nextX() + ghost.getIcon().getWidth()), (int) pacman.nextY());
-      Color check3 = pr.getColor((int) (ghost.nextX() + ghost.getIcon().getWidth()),
-            (int) (ghost.nextY() + ghost.getIcon().getHeight()));
-      Color check4 = pr.getColor((int) ghost.nextX(), (int) (ghost.nextY() + ghost.getIcon().getHeight()));
-
-      return check1.getRed() > 0.9 || check2.getRed() > 0.9 || check3.getRed() > 0.9 || check4.getRed() > 0.9;
-   }
-
    public void test(Ghost ghost) {
-      if (ghost.getPicView().getBoundsInParent().intersects(pacman.getPicView().getBoundsInParent())) {
-         die();
-         pacman.update();
+      if (ghost.getIconView().getBoundsInParent().intersects(pacman.getIconView().getBoundsInParent())) {
+         pacman.die();
       }
    }
 
-   public void coins() {
-      try {
-         Random rand = new Random();
-         Image coin = new Image(new FileInputStream(new File("ISTE-121-Pacman/assets/dot.png")));
+   public void tst() {
 
-         for (int i = 0; i < 10; i++) {
-            int x = 0;
-            int y = 0;
+      for (int i = 0; i < coins.size(); i++) {
+         if (coins.get(i).getBoundsInParent().intersects(pacman.getIconView().getBoundsInParent())) {
 
-            while (pr.getColor(x, y).getRed() > 0.9
-                  || pr.getColor(x + (int) coin.getWidth(), y).getRed() > 0.9
-                  || pr.getColor(x, y + (int) coin.getHeight()).getRed() > 0.9
-                  || pr.getColor(x + (int) coin.getWidth(), y + (int) coin.getHeight()).getRed() > 0.9) {
-               x = rand.nextInt((int) (width - coin.getWidth()));
-               y = rand.nextInt((int) (height - coin.getHeight()));
-            }
-
-            ImageView coinView = new ImageView(coin);
-            coinView.setTranslateX(x);
-            coinView.setTranslateY(y);
-
-            root.getChildren().add(coinView);
-
+            root.getChildren().remove(coins.get(i));
          }
-
-      } catch (FileNotFoundException fnfe) {
-         fnfe.printStackTrace();
-      } catch (IOException ioe) {
-         ioe.printStackTrace();
       }
+
    }
 
-   public void die() {
-      pacman.setPacmanX(150);
-      pacman.setPacmanY(100);
+   public void generateCoins(int numberOfCoins) {
+      for (int i = 0; i < numberOfCoins; i++) {
+         root.getChildren().addAll(new Coin(pr));
+
+      }
    }
 
    /*

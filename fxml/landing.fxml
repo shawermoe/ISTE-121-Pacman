@@ -1,0 +1,59 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.effect.ColorAdjust?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.paint.Color?>
+<?import javafx.scene.paint.LinearGradient?>
+<?import javafx.scene.paint.Stop?>
+<?import javafx.scene.text.Font?>
+
+<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="660.0" prefWidth="495.0" style="-fx-background-color: Black;" xmlns="http://javafx.com/javafx/18" xmlns:fx="http://javafx.com/fxml/1" fx:controller="ControlScene">
+   <effect>
+      <ColorAdjust />
+   </effect>
+   <children>
+      <Button layoutX="211.75" layoutY="443.0" mnemonicParsing="false" onAction="#exit" style="-fx-background-color: #570a0a#570a0a; -fx-label-padding: 5;" text="Exit" textFill="WHITE">
+         <font>
+            <Font name="Hiragino Sans W1" size="20.0" />
+         </font>
+      </Button>
+      <Label alignment="TOP_CENTER" layoutX="112.75" layoutY="150.0" text="PACMAN" textAlignment="CENTER">
+         <textFill>
+            <LinearGradient cycleMethod="REFLECT" endX="0.503562945368171" endY="1.0" startX="0.28503562945368166" startY="0.31353919239904987">
+               <stops>
+                  <Stop>
+                     <color>
+                        <Color red="0.49803921580314636" blue="0.0235294122248888" />
+                     </color>
+                  </Stop>
+                  <Stop offset="0.006711409395973154">
+                     <color>
+                        <Color red="0.3803921639919281" green="0.0235294122248888" blue="0.03921568766236305" opacity="0.699999988079071" />
+                     </color>
+                  </Stop>
+                  <Stop offset="1.0">
+                     <color>
+                        <Color red="0.34117648005485535" green="0.03921568766236305" blue="0.03921568766236305" />
+                     </color>
+                  </Stop>
+               </stops>
+            </LinearGradient>
+         </textFill>
+         <font>
+            <Font name="Hiragino Sans W1" size="60.0" />
+         </font>
+      </Label>
+      <Button layoutX="172.5" layoutY="368.0" mnemonicParsing="false" onAction="#switchToInstructions" style="-fx-background-color: #570a0a#570a0a; -fx-label-padding: 5;" text="How to play" textFill="WHITE">
+         <font>
+            <Font name="Hiragino Sans W1" size="20.0" />
+         </font>
+      </Button>
+      <Button layoutX="178.75" layoutY="293.0" mnemonicParsing="false" onAction="#choosePlayers" style="-fx-label-padding: 5; -fx-background-color: #570a0a#570a0a;" text="New game" textFill="WHITE">
+         <font>
+            <Font name="Hiragino Sans W1" size="20.0" />
+         </font>
+      </Button>
+   </children>
+</AnchorPane>

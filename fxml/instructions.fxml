@@ -1,0 +1,71 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.paint.Color?>
+<?import javafx.scene.paint.LinearGradient?>
+<?import javafx.scene.paint.Stop?>
+<?import javafx.scene.text.Font?>
+<?import javafx.scene.text.Text?>
+
+<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="660.0" prefWidth="495.0" style="-fx-background-color: black;" xmlns="http://javafx.com/javafx/18" xmlns:fx="http://javafx.com/fxml/1" fx:controller="ControlScene">
+   <children>
+      <Label layoutX="113.25" layoutY="122.0" text="INSTRUCTIONS">
+         <font>
+            <Font name="Hiragino Sans W1" size="36.0" />
+         </font>
+         <textFill>
+            <LinearGradient endX="0.5344418052256532" endY="1.0" startX="0.32779097387173395" startY="0.2660332541567696">
+               <stops>
+                  <Stop>
+                     <color>
+                        <Color red="0.3803921639919281" green="0.0235294122248888" blue="0.03921568766236305" />
+                     </color>
+                  </Stop>
+                  <Stop offset="0.006711409395973154">
+                     <color>
+                        <Color red="0.3803921639919281" green="0.0235294122248888" blue="0.03921568766236305" />
+                     </color>
+                  </Stop>
+                  <Stop offset="1.0">
+                     <color>
+                        <Color red="0.3803921639919281" green="0.027450980618596077" blue="0.04313725605607033" opacity="0.699999988079071" />
+                     </color>
+                  </Stop>
+               </stops>
+            </LinearGradient>
+         </textFill>
+      </Label>
+      <Button layoutX="169.0" layoutY="339.0" mnemonicParsing="false" style="-fx-background-color: #570a0a#570a0a #570a0a#570a0a;" text="&lt;" textFill="WHITE">
+         <font>
+            <Font name="Hiragino Sans W1" size="33.0" />
+         </font>
+      </Button>
+      <Button layoutX="274.0" layoutY="339.0" mnemonicParsing="false" style="-fx-background-color: #570a0a#570a0a #570a0a#570a0a;" text="&gt;" textFill="WHITE">
+         <font>
+            <Font name="Hiragino Sans W1" size="33.0" />
+         </font>
+      </Button>
+      <Button layoutX="221.0" layoutY="294.0" mnemonicParsing="false" style="-fx-background-color: #570a0a#570a0a #570a0a#570a0a;" text="^" textFill="WHITE">
+         <font>
+            <Font name="Hiragino Sans W1" size="33.0" />
+         </font>
+      </Button>
+      <Text fill="WHITE" layoutX="75.0" layoutY="222.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Use the following keys to move your packman around." textAlignment="CENTER" wrappingWidth="345.0">
+         <font>
+            <Font name="Hiragino Sans W1" size="20.0" />
+         </font>
+      </Text>
+      <Text fill="WHITE" layoutX="75.0" layoutY="443.0" strokeType="OUTSIDE" strokeWidth="0.0" text="The point of the game is to collect all the dots around the field without getting caught by the ghosts. Be careful, as you only have 3 lives!" textAlignment="CENTER" wrappingWidth="345.0">
+         <font>
+            <Font name="Hiragino Sans W1" size="20.0" />
+         </font>
+      </Text>
+      <Button layoutX="14.0" layoutY="14.0" mnemonicParsing="false" onAction="#backToMain" style="-fx-background-color: black;" text="&lt;" textFill="#570a0a">
+         <font>
+            <Font name="Hiragino Sans W1" size="45.0" />
+         </font>
+      </Button>
+   </children>
+</AnchorPane>

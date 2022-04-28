@@ -9,8 +9,10 @@ import javafx.scene.layout.Pane;
 public class Ghost extends Pane {
 
     // Position attributes
-    private double ghostX = 245;
+    private double ghostX = 235;
     private double ghostY = 250;
+
+    private int[] ghostDirections = { -90, 0, 90, 180 };
 
     private int speed = 2;
     private int rotation;

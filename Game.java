@@ -3,6 +3,7 @@
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
+import java.io.IOException;
 import java.util.Random;
 import java.util.Timer;
 import java.util.TimerTask;
@@ -10,9 +11,8 @@ import java.util.TimerTask;
 import javafx.animation.AnimationTimer;
 
 import javafx.application.Application;
-
 import javafx.event.EventHandler;
-
+import javafx.geometry.Pos;
 import javafx.scene.Scene;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
@@ -31,10 +31,12 @@ import javafx.stage.Stage;
  * @author - Mohamed Amgad
  */
 
-public class Game2DSTARTER extends Application implements EventHandler<KeyEvent> {
+public class Game extends Application implements EventHandler<KeyEvent> {
    // Window attributes
    private Stage stage;
    private StackPane root;
+   private int width = 495;
+   private int height = 660;
 
    // Pacman attributes
    private Pacman pacman; // The pacman
@@ -45,8 +47,6 @@ public class Game2DSTARTER extends Application implements EventHandler<KeyEvent>
 
    private AnimationTimer timer; // Timer to control animation
    private PixelReader pr; // PixelReader to implement collision
-
-   private int test = 0;
 
    // main program
    public static void main(String[] args) {
@@ -63,7 +63,7 @@ public class Game2DSTARTER extends Application implements EventHandler<KeyEvent>
 
       // Stackpane pane
       root = new StackPane();
-
+      root.setAlignment(Pos.TOP_LEFT);
       // create an array of pacmans (Panes) and start
       initializeScene();
    }
@@ -78,7 +78,7 @@ public class Game2DSTARTER extends Application implements EventHandler<KeyEvent>
 
       try {
          // Adding the background
-         Image map = new Image(new FileInputStream(new File("ISTE-121-Pacman/assets/map-5.jpg")));
+         Image map = new Image(new FileInputStream(new File("ISTE-121-Pacman/assets/map-6.jpg")));
          pr = map.getPixelReader();
          root.getChildren().add(new ImageView(map));
       } catch (FileNotFoundException e) {
@@ -93,8 +93,10 @@ public class Game2DSTARTER extends Application implements EventHandler<KeyEvent>
          root.getChildren().add(ghosts[i]);
       }
 
+      coins();
+
       // display the window
-      Scene scene = new Scene(root, 495, 660);
+      Scene scene = new Scene(root, width, height);
       stage.setScene(scene);
       stage.show();
 
@@ -107,8 +109,10 @@ public class Game2DSTARTER extends Application implements EventHandler<KeyEvent>
       // Use an animation to update the screen
       timer = new AnimationTimer() {
          public void handle(long now) {
-            if (!checkCollision())
+
+            if (!checkCollision()) {
                pacman.update();
+            }
 
             for (Ghost g : ghosts) {
                if (!ghostCheck(g)) {
@@ -157,9 +161,46 @@ public class Game2DSTARTER extends Application implements EventHandler<KeyEvent>
 
    public void test(Ghost ghost) {
       if (ghost.getPicView().getBoundsInParent().intersects(pacman.getPicView().getBoundsInParent())) {
-         test++;
-         System.out.println("Yay " + test);
+         die();
+         pacman.update();
       }
+   }
+
+   public void coins() {
+      try {
+         Random rand = new Random();
+         Image coin = new Image(new FileInputStream(new File("ISTE-121-Pacman/assets/dot.png")));
+
+         for (int i = 0; i < 10; i++) {
+            int x = 0;
+            int y = 0;
+
+            while (pr.getColor(x, y).getRed() > 0.9
+                  || pr.getColor(x + (int) coin.getWidth(), y).getRed() > 0.9
+                  || pr.getColor(x, y + (int) coin.getHeight()).getRed() > 0.9
+                  || pr.getColor(x + (int) coin.getWidth(), y + (int) coin.getHeight()).getRed() > 0.9) {
+               x = rand.nextInt((int) (width - coin.getWidth()));
+               y = rand.nextInt((int) (height - coin.getHeight()));
+            }
+
+            ImageView coinView = new ImageView(coin);
+            coinView.setTranslateX(x);
+            coinView.setTranslateY(y);
+
+            root.getChildren().add(coinView);
+
+         }
+
+      } catch (FileNotFoundException fnfe) {
+         fnfe.printStackTrace();
+      } catch (IOException ioe) {
+         ioe.printStackTrace();
+      }
+   }
+
+   public void die() {
+      pacman.setPacmanX(150);
+      pacman.setPacmanY(100);
    }
 
    /*

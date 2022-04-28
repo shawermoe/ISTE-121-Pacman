@@ -21,7 +21,7 @@ public class Pacman extends Pane {
 
     // Position attributes
     private double pacmanX = 230;
-    private double pacmanY = 300;
+    private double pacmanY = 500;
 
     // Speed of the pacman
     private int speed = 2;
@@ -153,6 +153,34 @@ public class Pacman extends Pane {
             default:
                 return 0.0;
         }
+    }
+
+    /**
+     * @return the pacmanX
+     */
+    public double getPacmanX() {
+        return pacmanX;
+    }
+
+    /**
+     * @param pacmanX the pacmanX to set
+     */
+    public void setPacmanX(double pacmanX) {
+        this.pacmanX = pacmanX;
+    }
+
+    /**
+     * @return the pacmanY
+     */
+    public double getPacmanY() {
+        return pacmanY;
+    }
+
+    /**
+     * @param pacmanY the pacmanY to set
+     */
+    public void setPacmanY(double pacmanY) {
+        this.pacmanY = pacmanY;
     }
 
     /**

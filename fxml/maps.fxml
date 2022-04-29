@@ -12,7 +12,7 @@
 
 <AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="660.0" prefWidth="495.0" style="-fx-background-color: black;" xmlns="http://javafx.com/javafx/18" xmlns:fx="http://javafx.com/fxml/1" fx:controller="ControlScene">
    <children>
-      <Button layoutX="14.0" layoutY="14.0" mnemonicParsing="false" style="-fx-background-color: black;" text="&lt;" textFill="#570a0a">
+      <Button layoutX="14.0" layoutY="14.0" mnemonicParsing="false" onAction="#backToPlayers" style="-fx-background-color: black;" text="&lt;" textFill="#570a0a">
          <font>
             <Font name="Hiragino Sans W1" size="45.0" />
          </font>
@@ -31,22 +31,32 @@
                   </Stop>
                   <Stop offset="1.0">
                      <color>
-                        <Color red="0.3799999952316284" green="0.026599999517202377" blue="0.044270001351833344" opacity="0.699999988079071" />
+                        <Color red="0.3803921639919281" green="0.027450980618596077" blue="0.04313725605607033" opacity="0.699999988079071" />
                      </color>
                   </Stop>
                </stops>
             </LinearGradient>
          </textFill>
       </Label>
-      <ImageView fitHeight="210.0" fitWidth="200.0" layoutX="69.0" layoutY="247.0" onMouseClicked="#mapSelected" pickOnBounds="true" preserveRatio="true">
+      <ImageView fitHeight="210.0" fitWidth="200.0" layoutX="69.0" layoutY="247.0" onMouseClicked="#singleEasy" pickOnBounds="true" preserveRatio="true">
          <image>
             <Image url="@../assets/map-easy.jpg" />
          </image>
       </ImageView>
-      <ImageView fitHeight="210.0" fitWidth="200.0" layoutX="262.0" layoutY="395.0" onMouseClicked="#mapSelected" pickOnBounds="true" preserveRatio="true">
+      <ImageView fitHeight="210.0" fitWidth="200.0" layoutX="262.0" layoutY="395.0" onMouseClicked="#singleHard" pickOnBounds="true" preserveRatio="true">
          <image>
             <Image url="@../assets/map-hard.jpg" />
          </image>
       </ImageView>
+      <Button layoutX="262.0" layoutY="264.0" mnemonicParsing="false" onAction="#singleEasy" style="-fx-background-color: #61070b#61070b;" text="Easy Mode" textFill="WHITE">
+         <font>
+            <Font name="Hiragino Sans W1" size="13.0" />
+         </font>
+      </Button>
+      <Button layoutX="122.0" layoutY="561.0" mnemonicParsing="false" onAction="#singleHard" style="-fx-background-color: #61070b#61070b;" text="Difficult mode" textFill="WHITE">
+         <font>
+            <Font name="Hiragino Sans W1" size="13.0" />
+         </font>
+      </Button>
    </children>
 </AnchorPane>

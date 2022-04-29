@@ -2,9 +2,13 @@
 import java.io.IOException;
 import javafx.scene.Node;
 import javafx.event.ActionEvent;
+import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
+import javafx.scene.image.Image;
+import javafx.scene.image.ImageView;
+import javafx.scene.layout.Pane;
 import javafx.stage.Stage;
 
 public class ControlScene {
@@ -74,13 +78,24 @@ public class ControlScene {
         }
     }
 
-    // public void mapSelected(ActionEvent ae) {
-    // try {
+    public void singleEasy(ActionEvent ae) {
+        stage = (Stage) ((Node) ae.getSource()).getScene().getWindow();
+        SinglePlayerEasy sp = new SinglePlayerEasy();
+        sp.start(stage);
+        scene = new Scene(root);
+        stage.setScene(scene);
+        stage.show();
 
-    // } catch (IOException ioe) {
-    // ioe.printStackTrace();
-    // }
-    // }
+    }
+
+    public void singleHard(ActionEvent ae) {
+        stage = (Stage) ((Node) ae.getSource()).getScene().getWindow();
+        SinglePlayerHard sh = new SinglePlayerHard();
+        sh.start(stage);
+        scene = new Scene(root);
+        stage.setScene(scene);
+        stage.show();
+    }
 
     public void exit(ActionEvent ae) {
         System.exit(0);

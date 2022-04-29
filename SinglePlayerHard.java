@@ -125,7 +125,6 @@ public class SinglePlayerHard extends Application implements EventHandler<KeyEve
             pacman.setScore(score);
          }
       }
-
    }
 
    public void generateCoins(int numberOfCoins) {
@@ -139,7 +138,7 @@ public class SinglePlayerHard extends Application implements EventHandler<KeyEve
    public void initializeMap() {
       try {
          // Adding the map to the game
-         Image map = new Image(new FileInputStream(new File("ISTE-121-Pacman/assets/map-easy.jpg")));
+         Image map = new Image(new FileInputStream(new File("ISTE-121-Pacman/assets/map-hard.jpg")));
          pr = map.getPixelReader();
          root.getChildren().add(new ImageView(map));
       } catch (FileNotFoundException e) {

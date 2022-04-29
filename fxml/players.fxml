@@ -36,7 +36,7 @@
             <Font name="Hiragino Sans W1" size="25.0" />
          </font>
       </Button>
-      <Button layoutX="161.0" layoutY="368.0" mnemonicParsing="false" onAction="#chooseMaps" style="-fx-background-color: #570a0a#570a0a #570a0a#570a0a #570a0a#570a0a #570a0a#570a0a; -fx-label-padding: 5;" text="Multiplayer" textFill="WHITE">
+      <Button layoutX="161.0" layoutY="368.0" mnemonicParsing="false" onAction="#chooseMapsMulti" style="-fx-background-color: #570a0a#570a0a #570a0a#570a0a #570a0a#570a0a #570a0a#570a0a; -fx-label-padding: 5;" text="Multiplayer" textFill="WHITE">
          <font>
             <Font name="Hiragino Sans W1" size="25.0" />
          </font>

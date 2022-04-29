@@ -50,6 +50,18 @@ public class ControlScene {
         }
     }
 
+    public void chooseMapsMulti(ActionEvent ae) {
+        try {
+            root = FXMLLoader.load(getClass().getResource("/fxml/mapsMulti.fxml"));
+            stage = (Stage) ((Node) ae.getSource()).getScene().getWindow();
+            scene = new Scene(root);
+            stage.setScene(scene);
+            stage.show();
+        } catch (IOException ioe) {
+            ioe.printStackTrace();
+        }
+    }
+
     public void backToMain(ActionEvent ae) {
         try {
             root = FXMLLoader.load(getClass().getResource("/fxml/landing.fxml"));
@@ -88,6 +100,25 @@ public class ControlScene {
         stage = (Stage) ((Node) ae.getSource()).getScene().getWindow();
         SinglePlayerHard sh = new SinglePlayerHard();
         sh.start(stage);
+        scene = new Scene(root);
+        stage.setScene(scene);
+        stage.show();
+    }
+
+    public void multiEasy(ActionEvent ae) {
+        stage = (Stage) ((Node) ae.getSource()).getScene().getWindow();
+        MultiEasy me = new MultiEasy();
+        me.start(stage);
+        scene = new Scene(root);
+        stage.setScene(scene);
+        stage.show();
+
+    }
+
+    public void multiHard(ActionEvent ae) {
+        stage = (Stage) ((Node) ae.getSource()).getScene().getWindow();
+        MultiHard mh = new MultiHard();
+        mh.start(stage);
         scene = new Scene(root);
         stage.setScene(scene);
         stage.show();

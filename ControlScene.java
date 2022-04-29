@@ -1,3 +1,4 @@
+
 import java.io.IOException;
 import javafx.scene.Node;
 import javafx.event.ActionEvent;
@@ -14,7 +15,7 @@ public class ControlScene {
     // method for switching between scenes
     public void choosePlayers(ActionEvent ae) {
         try {
-            Parent root = FXMLLoader.load(getClass().getResource("players.fxml"));
+            root = FXMLLoader.load(getClass().getResource("/fxml/players.fxml"));
             stage = (Stage) ((Node) ae.getSource()).getScene().getWindow();
             scene = new Scene(root);
             stage.setScene(scene);
@@ -25,8 +26,9 @@ public class ControlScene {
     }
 
     public void switchToInstructions(ActionEvent ae) {
+
         try {
-            Parent root = FXMLLoader.load(getClass().getResource("instructions.fxml"));
+            root = FXMLLoader.load(getClass().getResource("/fxml/instructions.fxml"));
             stage = (Stage) ((Node) ae.getSource()).getScene().getWindow();
             scene = new Scene(root);
             stage.setScene(scene);
@@ -38,7 +40,7 @@ public class ControlScene {
 
     public void chooseMaps(ActionEvent ae) {
         try {
-            Parent root = FXMLLoader.load(getClass().getResource("maps.fxml"));
+            root = FXMLLoader.load(getClass().getResource("/fxml/maps.fxml"));
             stage = (Stage) ((Node) ae.getSource()).getScene().getWindow();
             scene = new Scene(root);
             stage.setScene(scene);
@@ -50,7 +52,7 @@ public class ControlScene {
 
     public void backToMain(ActionEvent ae) {
         try {
-            Parent root = FXMLLoader.load(getClass().getResource("landing.fxml"));
+            root = FXMLLoader.load(getClass().getResource("/fxml/landing.fxml"));
             stage = (Stage) ((Node) ae.getSource()).getScene().getWindow();
             scene = new Scene(root);
             stage.setScene(scene);
@@ -62,7 +64,7 @@ public class ControlScene {
 
     public void backToPlayers(ActionEvent ae) {
         try {
-            Parent root = FXMLLoader.load(getClass().getResource("players.fxml"));
+            root = FXMLLoader.load(getClass().getResource("/fxml/players.fxml"));
             stage = (Stage) ((Node) ae.getSource()).getScene().getWindow();
             scene = new Scene(root);
             stage.setScene(scene);

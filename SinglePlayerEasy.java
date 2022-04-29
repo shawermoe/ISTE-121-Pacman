@@ -7,6 +7,7 @@ import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 
 import javafx.application.Application;
+import javafx.application.Platform;
 import javafx.event.EventHandler;
 
 import java.util.List;
@@ -17,6 +18,8 @@ import java.util.TimerTask;
 import javafx.geometry.Pos;
 
 import javafx.scene.Scene;
+import javafx.scene.control.Alert;
+import javafx.scene.control.Alert.AlertType;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.image.PixelReader;
@@ -49,7 +52,7 @@ public class SinglePlayerEasy extends Application implements EventHandler<KeyEve
    private Ghost[] ghosts = new Ghost[4];
 
    // Number of coins
-   private int numCoins = 20;
+   private int numCoins = 1;
 
    private AnimationTimer timer; // Timer to control animation
    private PixelReader pr; // PixelReader to implement collision
@@ -111,6 +114,31 @@ public class SinglePlayerEasy extends Application implements EventHandler<KeyEve
             for (Ghost ghost : ghosts) {
                ghost.update();
             }
+
+            if (coins.size() == 0) {
+               timer.stop();
+               Alert alert = new Alert(AlertType.INFORMATION, "You have sucessfully collected all the coins!");
+               alert.setHeaderText("Winner winner, chicken dinner!");
+               alert.setTitle("You Won!");
+               Platform.runLater(new Runnable() {
+                  public void run() {
+                     alert.showAndWait();
+                  };
+               });
+            }
+
+            if (pacman.getLives() == 0) {
+               timer.stop();
+
+               Alert alert = new Alert(AlertType.ERROR, "You Ran Out Of Lives!");
+               alert.setHeaderText("Better Luck Next Time!");
+               alert.setTitle("You Lost!");
+               Platform.runLater(new Runnable() {
+                  public void run() {
+                     alert.showAndWait();
+                  };
+               });
+            }
          }
       };
 
@@ -123,6 +151,7 @@ public class SinglePlayerEasy extends Application implements EventHandler<KeyEve
       Timer startTimer = new Timer();
       long delay = 1000L;
       startTimer.schedule(task, delay);
+
    }
 
    // Checking whether the pacman has collided with the coin

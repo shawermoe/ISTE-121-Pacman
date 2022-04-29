@@ -7,6 +7,7 @@ import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 
 import javafx.application.Application;
+import javafx.application.Platform;
 import javafx.event.EventHandler;
 
 import java.util.List;
@@ -17,6 +18,8 @@ import java.util.TimerTask;
 import javafx.geometry.Pos;
 
 import javafx.scene.Scene;
+import javafx.scene.control.Alert;
+import javafx.scene.control.Alert.AlertType;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.image.PixelReader;
@@ -98,6 +101,19 @@ public class SinglePlayerHard extends Application implements EventHandler<KeyEve
 
             for (Ghost ghost : ghosts) {
                ghost.update();
+            }
+
+            if (pacman.getLives() == 0) {
+               timer.stop();
+
+               Alert alert = new Alert(AlertType.ERROR, "You Ran Out Of Lives!");
+               alert.setHeaderText("Better Luck Next Time!");
+               alert.setTitle("You Lost!");
+               Platform.runLater(new Runnable() {
+                  public void run() {
+                     alert.showAndWait();
+                  };
+               });
             }
          }
       };

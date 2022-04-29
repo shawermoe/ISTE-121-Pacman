@@ -58,6 +58,20 @@ public class Pacman extends Player {
         this.score = score;
     }
 
+    /**
+     * @return the lives
+     */
+    public int getLives() {
+        return lives;
+    }
+
+    /**
+     * @param lives the lives to set
+     */
+    public void setLives(int lives) {
+        this.lives = lives;
+    }
+
     // Method which sets the position of the Pacman once they die
     public void loseLife() {
         this.setX(initialX);

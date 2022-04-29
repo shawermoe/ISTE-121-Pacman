@@ -48,6 +48,9 @@ public class SinglePlayer extends Application implements EventHandler<KeyEvent> 
    // Array of ghosts
    private Ghost[] ghosts = new Ghost[4];
 
+   // Number of coins
+   private int numCoins = 20;
+
    private AnimationTimer timer; // Timer to control animation
    private PixelReader pr; // PixelReader to implement collision
 
@@ -77,7 +80,7 @@ public class SinglePlayer extends Application implements EventHandler<KeyEvent> 
       initializeMap();
       initializePacman();
       initializeGhosts();
-      generateCoins(10);
+      generateCoins(numCoins);
 
       // display the window
       Scene scene = new Scene(root, width, height);
@@ -90,14 +93,11 @@ public class SinglePlayer extends Application implements EventHandler<KeyEvent> 
       // Use an animation to update the screen
       timer = new AnimationTimer() {
          public void handle(long now) {
+            checkCoinCollision();
             pacman.update();
-
-            tst();
-
             for (Ghost ghost : ghosts) {
                ghost.update();
             }
-
          }
       };
 
@@ -112,16 +112,17 @@ public class SinglePlayer extends Application implements EventHandler<KeyEvent> 
       startTimer.schedule(task, delay);
    }
 
-   public void test(Ghost ghost) {
+   public void checkCoinCollision() {
 
-   }
-
-   public void tst() {
+      int score = pacman.getScore();
 
       for (int i = 0; i < coins.size(); i++) {
          if (coins.get(i).getBoundsInParent().intersects(pacman.getIconView().getBoundsInParent())) {
-
             root.getChildren().remove(coins.get(i));
+            coins.remove(i);
+            score += 10;
+            pacman.setScore(score);
+            System.out.println("Pacman score is: " + score);
          }
       }
 
@@ -129,7 +130,9 @@ public class SinglePlayer extends Application implements EventHandler<KeyEvent> 
 
    public void generateCoins(int numberOfCoins) {
       for (int i = 0; i < numberOfCoins; i++) {
-         root.getChildren().addAll(new Coin(pr));
+         Coin coin = new Coin(pr);
+         coins.add(coin);
+         root.getChildren().add(coin);
       }
    }
 

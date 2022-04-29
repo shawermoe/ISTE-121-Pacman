@@ -31,6 +31,11 @@ public class Pacman extends Player {
     private static int initialX = 234;
     private static int initialY = 508;
 
+    // Attribute to keep count of the number of lives of the pacman
+    private int lives = 3;
+
+    private int score = 0;
+
     private Ghost[] ghosts;
 
     // Constructor for the Pacman character
@@ -39,10 +44,26 @@ public class Pacman extends Player {
         this.ghosts = ghosts;
     }
 
+    /**
+     * @return the score
+     */
+    public int getScore() {
+        return score;
+    }
+
+    /**
+     * @param score the score to set
+     */
+    public void setScore(int score) {
+        this.score = score;
+    }
+
     // Method which sets the position of the Pacman once they die
-    public void die() {
+    public void loseLife() {
         this.setX(234);
         this.setY(508);
+        lives--;
+        System.out.println("Number of lives is: " + lives);
     }
 
     @Override
@@ -50,7 +71,7 @@ public class Pacman extends Player {
     public void update() {
         for (int i = 0; i < ghosts.length; i++) {
             if (ghosts[i].getIconView().getBoundsInParent().intersects(this.getIconView().getBoundsInParent())) {
-                die();
+                loseLife();
             }
         }
 

@@ -56,6 +56,7 @@ public class MultiEasy extends Application implements EventHandler<KeyEvent> {
     private int width = 495;
     private int height = 690;
 
+    // araylists for coins and pellets
     private List<ImageView> coins = new ArrayList<>();
     private List<ImageView> pellets = new ArrayList<>();
 
@@ -382,6 +383,7 @@ public class MultiEasy extends Application implements EventHandler<KeyEvent> {
         });
     }
 
+    // method for connecting with the server
     private void doConnect() {
         try {
             timer.start();
@@ -417,6 +419,7 @@ public class MultiEasy extends Application implements EventHandler<KeyEvent> {
 
     }
 
+    // seding a message to the server
     private void sendMessage() {
         // NAME:MESSAGE
         try {
@@ -439,7 +442,7 @@ public class MultiEasy extends Application implements EventHandler<KeyEvent> {
                     Object obj = ois.readObject();
                     if (obj instanceof String) {
                         String message = (String) obj;// chat feedback
-
+                        // appending the taLog with the message received
                         Platform.runLater(new Runnable() {
                             @Override
                             public void run() {
@@ -450,6 +453,7 @@ public class MultiEasy extends Application implements EventHandler<KeyEvent> {
                     } else if (obj instanceof PacmanStatus) {
                         PacmanStatus newStatus = (PacmanStatus) obj;
                         if (newStatus.getID() != currentID) {
+                            // ID handling
                             switch (newStatus.getID()) {
                                 case 0:
                                     Platform.runLater(new Runnable() {

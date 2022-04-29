@@ -117,7 +117,7 @@ public class PacmanServer extends Application implements EventHandler<ActionEven
         @Override
         public void run() {
             try {
-                taLog("Client #" + clientIDCounter + "has connected");
+                taLog("Client #" + clientIDCounter + " has connected");
 
                 this.ois = new ObjectInputStream(this.cSocket.getInputStream());
                 this.oos = new ObjectOutputStream(this.cSocket.getOutputStream());
@@ -175,6 +175,7 @@ public class PacmanServer extends Application implements EventHandler<ActionEven
 
     }
 
+    // method for appending the taLog
     public void taLog(String message) {
         Platform.runLater(new Runnable() {
             @Override
@@ -184,6 +185,7 @@ public class PacmanServer extends Application implements EventHandler<ActionEven
         });
     }
 
+    // method for alert
     public void showAlert(AlertType type, String message) {
         Platform.runLater(new Runnable() {
             public void run() {

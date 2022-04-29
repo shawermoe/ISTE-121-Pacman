@@ -7,6 +7,7 @@ public class PacmanStatus implements Serializable {
     private int Y;
     private int direction;
 
+    // parameterized constructor
     public PacmanStatus(int id, int X, int Y, int direction) {
         this.ID = id;
         this.X = X;
@@ -14,26 +15,29 @@ public class PacmanStatus implements Serializable {
         this.direction = direction;
     }
 
-    int getID() {
+    /**
+     * @return the id
+     */
+    public int getID() {
         return ID;
     }
 
     /**
-     * @return the x
+     * @return the x value
      */
     public int getX() {
         return X;
     }
 
     /**
-     * @return the y
+     * @return the y value
      */
     public int getY() {
         return Y;
     }
 
     /**
-     * @return the direction
+     * @return the direction of the pacman
      */
     public int getDirection() {
         return direction;

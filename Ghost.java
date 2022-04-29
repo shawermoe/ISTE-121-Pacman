@@ -50,6 +50,8 @@ public class Ghost extends Player {
 
     @Override
     public void update() {
+        // checking if there is collision with the wall; if there isn't, the pacman
+        // continues moving and if there is, the pacman goes to a random direction
         if (!super.checkWallCollision()) {
             super.update();
         } else {

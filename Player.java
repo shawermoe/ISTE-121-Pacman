@@ -7,7 +7,8 @@ import javafx.scene.layout.Pane;
 import javafx.scene.paint.Color;
 
 /**
- * Pacman Class with JavaFX
+ * Player Class with JavaFX
+ * Class will be used as a base to Pacman and Ghost classes
  * 
  * @ASSESSME.INTENSITY:LOW
  * @author - Kiara Toska
@@ -26,7 +27,7 @@ public class Player extends Pane {
     private Image icon;
     private ImageView iconView;
 
-    // Constructor takes in initial X and Y as well as the image
+    // Constructor takes in initial coordinates, pixelreader, as well as the image
     public Player(int x, int y, Image icon, PixelReader pr) {
         this.icon = icon;
         this.x = x;
@@ -47,63 +48,63 @@ public class Player extends Pane {
     }
 
     /**
-     * @param x the x to set
+     * @param x sets the value of the X coordinate of the player
      */
     public void setX(double x) {
         this.x = x;
     }
 
     /**
-     * @return the y
+     * @return the Y coordinate of the player.
      */
     public double getY() {
         return y;
     }
 
     /**
-     * @param y the y to set
+     * @param y sets the value of the Y coordinate of the player
      */
     public void setY(double y) {
         this.y = y;
     }
 
     /**
-     * @return the direction
+     * @return the direction which the player is facing
      */
     public int getDirection() {
         return direction;
     }
 
     /**
-     * @param direction the direction to set
+     * @param direction the direction to set the direction of the player
      */
     public void setDirection(int direction) {
         this.direction = direction;
     }
 
     /**
-     * @return the speed
+     * @return the speed of the player
      */
     public int getSpeed() {
         return speed;
     }
 
     /**
-     * @param speed the speed to set
+     * @param speed the speed to set how fast the player can move
      */
     public void setSpeed(int speed) {
         this.speed = speed;
     }
 
     /**
-     * @return the icon
+     * @return the icon of the player
      */
     public Image getIcon() {
         return icon;
     }
 
     /**
-     * @param icon the icon to set
+     * @param icon the icon to set the icon of the player
      */
     public void setIcon(Image icon) {
         this.icon = icon;
@@ -117,12 +118,14 @@ public class Player extends Pane {
     }
 
     /**
-     * @param iconView the iconView to set
+     * @param iconView the iconView to display the icon
+     * @see getIcon() & setIcon()
      */
     public void setIconView(ImageView iconView) {
         this.iconView = iconView;
     }
 
+    // Update method which moves the player depending on the directon they're facing
     public void update() {
         switch (this.direction) {
             // Case when Pacman is facing up
@@ -155,7 +158,7 @@ public class Player extends Pane {
     }
 
     /**
-     * This method is used to calculate the next X coordinate of the pacman object
+     * This method is used to calculate the next X coordinate of the player
      * based on the rotation or direction the pacman is facing
      */
     public double nextX() {
@@ -183,7 +186,7 @@ public class Player extends Pane {
     }
 
     /**
-     * This method is used to calculate the next Y coordinate of the pacman object
+     * This method is used to calculate the next Y coordinate of the player
      * based on the rotation or direction the pacman is facing
      */
     public double nextY() {
@@ -210,6 +213,7 @@ public class Player extends Pane {
         }
     }
 
+    // method to check whether the player has collided with the wall
     public boolean checkWallCollision() {
         Color check1 = pr.getColor((int) this.nextX(), (int) this.nextY());
         Color check2 = pr.getColor((int) (this.nextX() + this.getIcon().getWidth()), (int) this.nextY());
@@ -218,7 +222,5 @@ public class Player extends Pane {
         Color check4 = pr.getColor((int) this.nextX(), (int) (this.nextY() + this.getIcon().getHeight()));
 
         return check1.getRed() > 0.2 || check2.getRed() > 0.2 || check3.getRed() > 0.2 || check4.getRed() > 0.2;
-
     }
-
 }

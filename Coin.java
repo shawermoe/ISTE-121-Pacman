@@ -35,7 +35,7 @@ public class Coin extends ImageView {
     // Static block to catch the exception for reading the coins image
     static {
         try {
-            icon = new Image(new FileInputStream(new File("ISTE-121-Pacman/assets/dot.png")));
+            icon = new Image(new FileInputStream(new File("ISTE-121-Pacman/assets/coin.png")));
         } catch (FileNotFoundException e) {
             e.printStackTrace();
         }

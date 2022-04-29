@@ -80,29 +80,21 @@ public class SinglePlayer extends Application implements EventHandler<KeyEvent> 
 
       try {
          // Adding the background
-         Image map = new Image(new FileInputStream(new File("ISTE-121-Pacman/assets/mapppp.jpg")));
+         Image map = new Image(new FileInputStream(new File("ISTE-121-Pacman/assets/map.jpg")));
          pr = map.getPixelReader();
          root.getChildren().add(new ImageView(map));
       } catch (FileNotFoundException e) {
          e.printStackTrace();
       }
       // The Pacman object
-      try {
-         pacman = new Pacman(pr);
-      } catch (FileNotFoundException e1) {
-         e1.printStackTrace();
-      }
+      pacman = new Pacman(pr);
 
       // Adding the pacman
       root.getChildren().add(pacman);
 
-      try {
-         for (int i = 0; i < ghosts.length; i++) {
-            ghosts[i] = new Ghost(pr);
-            root.getChildren().add(ghosts[i]);
-         }
-      } catch (FileNotFoundException e) {
-         e.printStackTrace();
+      for (int i = 0; i < ghosts.length; i++) {
+         ghosts[i] = new Ghost(pr);
+         root.getChildren().add(ghosts[i]);
       }
 
       generateCoins(10);

@@ -80,7 +80,6 @@ public class Pacman extends Player {
         this.getIconView().setTranslateY(this.getY());
 
         lives--;
-        System.out.println("Number of lives is: " + lives);
     }
 
     @Override

@@ -44,9 +44,8 @@ public class SinglePlayer extends Application implements EventHandler<KeyEvent> 
 
    // Pacman attributes
    private Pacman pacman; // The pacman
-   // private Ghost ghost; // The ghost
 
-   // Arrays of ghost
+   // Array of ghosts
    private Ghost[] ghosts = new Ghost[4];
 
    private AnimationTimer timer; // Timer to control animation
@@ -66,7 +65,7 @@ public class SinglePlayer extends Application implements EventHandler<KeyEvent> 
             evt -> System.exit(0));
 
       // Stackpane pane
-      root = new StackPane();
+      this.root = new StackPane();
       root.setAlignment(Pos.TOP_LEFT);
 
       // create an array of pacmans (Panes) and start
@@ -75,28 +74,9 @@ public class SinglePlayer extends Application implements EventHandler<KeyEvent> 
 
    // start the race
    public void initializeScene() {
-
-      // The Ghost object
-
-      try {
-         // Adding the background
-         Image map = new Image(new FileInputStream(new File("ISTE-121-Pacman/assets/map.jpg")));
-         pr = map.getPixelReader();
-         root.getChildren().add(new ImageView(map));
-      } catch (FileNotFoundException e) {
-         e.printStackTrace();
-      }
-      // The Pacman object
-      pacman = new Pacman(pr);
-
-      // Adding the pacman
-      root.getChildren().add(pacman);
-
-      for (int i = 0; i < ghosts.length; i++) {
-         ghosts[i] = new Ghost(pr);
-         root.getChildren().add(ghosts[i]);
-      }
-
+      initializeMap();
+      initializePacman();
+      initializeGhosts();
       generateCoins(10);
 
       // display the window
@@ -107,26 +87,15 @@ public class SinglePlayer extends Application implements EventHandler<KeyEvent> 
       // Adding keyboard functionality
       scene.setOnKeyPressed(this);
 
-      // Used for testing purposes
-      System.out.println("Starting race...");
-
       // Use an animation to update the screen
       timer = new AnimationTimer() {
          public void handle(long now) {
-
-            if (!pacman.checkWallCollision()) {
-               pacman.update();
-            }
+            pacman.update();
 
             tst();
 
-            for (Ghost g : ghosts) {
-               if (!g.checkWallCollision()) {
-                  g.update();
-                  test(g);
-               } else {
-                  g.randomDirection();
-               }
+            for (Ghost ghost : ghosts) {
+               ghost.update();
             }
 
          }
@@ -144,9 +113,7 @@ public class SinglePlayer extends Application implements EventHandler<KeyEvent> 
    }
 
    public void test(Ghost ghost) {
-      if (ghost.getIconView().getBoundsInParent().intersects(pacman.getIconView().getBoundsInParent())) {
-         pacman.die();
-      }
+
    }
 
    public void tst() {
@@ -163,8 +130,33 @@ public class SinglePlayer extends Application implements EventHandler<KeyEvent> 
    public void generateCoins(int numberOfCoins) {
       for (int i = 0; i < numberOfCoins; i++) {
          root.getChildren().addAll(new Coin(pr));
-
       }
+   }
+
+   public void initializeMap() {
+      try {
+         // Adding the map to the game
+         Image map = new Image(new FileInputStream(new File("ISTE-121-Pacman/assets/map.jpg")));
+         pr = map.getPixelReader();
+         root.getChildren().add(new ImageView(map));
+      } catch (FileNotFoundException e) {
+         e.printStackTrace();
+      }
+   }
+
+   public void initializeGhosts() {
+      for (int i = 0; i < ghosts.length; i++) {
+         ghosts[i] = new Ghost(pr);
+         root.getChildren().add(ghosts[i]);
+      }
+   }
+
+   public void initializePacman() {
+      // The Pacman object
+      pacman = new Pacman(pr, ghosts);
+
+      // Adding the pacman
+      root.getChildren().add(pacman);
    }
 
    /*

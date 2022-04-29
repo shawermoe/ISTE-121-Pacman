@@ -48,4 +48,12 @@ public class Ghost extends Player {
         this.setDirection(ghostDirections[direction]);
     }
 
+    @Override
+    public void update() {
+        if (!super.checkWallCollision()) {
+            super.update();
+        } else {
+            randomDirection();
+        }
+    }
 }

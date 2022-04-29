@@ -31,9 +31,12 @@ public class Pacman extends Player {
     private static int initialX = 234;
     private static int initialY = 508;
 
+    private Ghost[] ghosts;
+
     // Constructor for the Pacman character
-    public Pacman(PixelReader pr) {
+    public Pacman(PixelReader pr, Ghost[] ghosts) {
         super(initialX, initialY, icon, pr);
+        this.ghosts = ghosts;
     }
 
     // Method which sets the position of the Pacman once they die
@@ -45,7 +48,20 @@ public class Pacman extends Player {
     @Override
     // Movement method
     public void update() {
-        super.update();
-        super.getIconView().setRotate(this.getDirection());
+        for (int i = 0; i < ghosts.length; i++) {
+            if (ghosts[i].getIconView().getBoundsInParent().intersects(this.getIconView().getBoundsInParent())) {
+                die();
+            }
+        }
+
+        if (!super.checkWallCollision()) {
+            // Implemented dynamic movement for the pacman
+            double speed = this.getSpeed();
+            speed += 0.0001;
+            this.setSpeed(speed);
+
+            super.update();
+            super.getIconView().setRotate(this.getDirection());
+        }
     }
 }

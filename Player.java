@@ -20,7 +20,7 @@ public class Player extends Pane {
     private double x;
     private double y;
     private int direction = -90;
-    private int speed = 2;
+    private double speed = 2;
 
     // Attributes for reading and displaying the icons
     private PixelReader pr;
@@ -85,14 +85,14 @@ public class Player extends Pane {
     /**
      * @return the speed of the player
      */
-    public int getSpeed() {
+    public double getSpeed() {
         return speed;
     }
 
     /**
      * @param speed the speed to set how fast the player can move
      */
-    public void setSpeed(int speed) {
+    public void setSpeed(double speed) {
         this.speed = speed;
     }
 

@@ -33,7 +33,7 @@ import javafx.stage.Stage;
  * @author - Mohamed Amgad
  */
 
-public class SinglePlayer extends Application implements EventHandler<KeyEvent> {
+public class SinglePlayerEasy extends Application implements EventHandler<KeyEvent> {
    // Window attributes
    private Stage stage;
    private StackPane root;
@@ -71,15 +71,23 @@ public class SinglePlayer extends Application implements EventHandler<KeyEvent> 
       this.root = new StackPane();
       root.setAlignment(Pos.TOP_LEFT);
 
-      // create an array of pacmans (Panes) and start
+      // Initializing all the attributes
       initializeScene();
    }
 
    // start the race
    public void initializeScene() {
+
+      // Adding the map
       initializeMap();
+
+      // Adding the pacman player
       initializePacman();
+
+      // Adding the 4 ghosts
       initializeGhosts();
+
+      // Adding the coins
       generateCoins(numCoins);
 
       // display the window
@@ -93,8 +101,13 @@ public class SinglePlayer extends Application implements EventHandler<KeyEvent> 
       // Use an animation to update the screen
       timer = new AnimationTimer() {
          public void handle(long now) {
+            // checks if any coins were picked up
             checkCoinCollision();
+
+            // moves the pacman
             pacman.update();
+
+            // Moves all the ghosts simultaneously
             for (Ghost ghost : ghosts) {
                ghost.update();
             }
@@ -112,22 +125,25 @@ public class SinglePlayer extends Application implements EventHandler<KeyEvent> 
       startTimer.schedule(task, delay);
    }
 
+   // Checking whether the pacman has collided with the coin
    public void checkCoinCollision() {
 
+      // Grabbing the score from the pacman
       int score = pacman.getScore();
 
+      // loops through all the coins and adds score to the pacman
       for (int i = 0; i < coins.size(); i++) {
          if (coins.get(i).getBoundsInParent().intersects(pacman.getIconView().getBoundsInParent())) {
             root.getChildren().remove(coins.get(i));
-            coins.remove(i);
+            coins.remove(coins.get(i));
             score += 10;
             pacman.setScore(score);
-            System.out.println("Pacman score is: " + score);
          }
       }
 
    }
 
+   // Randomizing coins across map
    public void generateCoins(int numberOfCoins) {
       for (int i = 0; i < numberOfCoins; i++) {
          Coin coin = new Coin(pr);
@@ -136,10 +152,11 @@ public class SinglePlayer extends Application implements EventHandler<KeyEvent> 
       }
    }
 
+   // Adding map to the GUI
    public void initializeMap() {
       try {
          // Adding the map to the game
-         Image map = new Image(new FileInputStream(new File("ISTE-121-Pacman/assets/map.jpg")));
+         Image map = new Image(new FileInputStream(new File("ISTE-121-Pacman/assets/map-easy.jpg")));
          pr = map.getPixelReader();
          root.getChildren().add(new ImageView(map));
       } catch (FileNotFoundException e) {
@@ -147,6 +164,7 @@ public class SinglePlayer extends Application implements EventHandler<KeyEvent> 
       }
    }
 
+   // Adding the ghosts to the root
    public void initializeGhosts() {
       for (int i = 0; i < ghosts.length; i++) {
          ghosts[i] = new Ghost(pr);
@@ -154,6 +172,7 @@ public class SinglePlayer extends Application implements EventHandler<KeyEvent> 
       }
    }
 
+   // Adding the pacman to the root
    public void initializePacman() {
       // The Pacman object
       pacman = new Pacman(pr, ghosts);

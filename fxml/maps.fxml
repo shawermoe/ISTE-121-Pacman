@@ -1,6 +1,52 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.image.Image?>
+<?import javafx.scene.image.ImageView?>
 <?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.paint.Color?>
+<?import javafx.scene.paint.LinearGradient?>
+<?import javafx.scene.paint.Stop?>
+<?import javafx.scene.text.Font?>
 
-
-<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="660.0" prefWidth="495.0" style="-fx-background-color: black;" xmlns="http://javafx.com/javafx/18" xmlns:fx="http://javafx.com/fxml/1" />
+<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="660.0" prefWidth="495.0" style="-fx-background-color: black;" xmlns="http://javafx.com/javafx/18" xmlns:fx="http://javafx.com/fxml/1" fx:controller="ControlScene">
+   <children>
+      <Button layoutX="14.0" layoutY="14.0" mnemonicParsing="false" style="-fx-background-color: black;" text="&lt;" textFill="#570a0a">
+         <font>
+            <Font name="Hiragino Sans W1" size="45.0" />
+         </font>
+      </Button>
+      <Label layoutX="122.25" layoutY="150.0" text="SELECT">
+         <font>
+            <Font name="Hiragino Sans W1" size="60.0" />
+         </font>
+         <textFill>
+            <LinearGradient endX="0.5201900237529691" endY="1.0" startX="0.2850356294536817" startY="0.33729216152019004">
+               <stops>
+                  <Stop>
+                     <color>
+                        <Color red="0.3803921639919281" green="0.0235294122248888" blue="0.03921568766236305" />
+                     </color>
+                  </Stop>
+                  <Stop offset="1.0">
+                     <color>
+                        <Color red="0.3799999952316284" green="0.026599999517202377" blue="0.044270001351833344" opacity="0.699999988079071" />
+                     </color>
+                  </Stop>
+               </stops>
+            </LinearGradient>
+         </textFill>
+      </Label>
+      <ImageView fitHeight="210.0" fitWidth="200.0" layoutX="69.0" layoutY="247.0" onMouseClicked="#mapSelected" pickOnBounds="true" preserveRatio="true">
+         <image>
+            <Image url="@../assets/map-easy.jpg" />
+         </image>
+      </ImageView>
+      <ImageView fitHeight="210.0" fitWidth="200.0" layoutX="262.0" layoutY="395.0" onMouseClicked="#mapSelected" pickOnBounds="true" preserveRatio="true">
+         <image>
+            <Image url="@../assets/map-hard.jpg" />
+         </image>
+      </ImageView>
+   </children>
+</AnchorPane>

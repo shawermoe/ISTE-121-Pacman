@@ -29,7 +29,7 @@ public class Pacman extends Player {
 
     // Attributes to set the initial position of the Pacman
     private static int initialX = 234;
-    private static int initialY = 508;
+    private static int initialY = 628;
 
     // Attribute to keep count of the number of lives of the pacman
     private int lives = 3;
@@ -60,8 +60,11 @@ public class Pacman extends Player {
 
     // Method which sets the position of the Pacman once they die
     public void loseLife() {
-        this.setX(234);
-        this.setY(508);
+        this.setX(initialX);
+        this.setY(initialY);
+        this.getIconView().setTranslateX(this.getX());
+        this.getIconView().setTranslateY(this.getY());
+
         lives--;
         System.out.println("Number of lives is: " + lives);
     }

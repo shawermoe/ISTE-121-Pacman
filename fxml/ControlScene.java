@@ -72,6 +72,14 @@ public class ControlScene {
         }
     }
 
+    // public void mapSelected(ActionEvent ae) {
+    // try {
+
+    // } catch (IOException ioe) {
+    // ioe.printStackTrace();
+    // }
+    // }
+
     public void exit(ActionEvent ae) {
         System.exit(0);
     }

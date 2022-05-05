@@ -99,9 +99,6 @@ public class ControlScene {
         stage = (Stage) ((Node) ae.getSource()).getScene().getWindow();
         SinglePlayerEasy sp = new SinglePlayerEasy();
         sp.start(stage);
-        scene = new Scene(root);
-        stage.setScene(scene);
-        stage.show();
 
     }
 
@@ -111,9 +108,6 @@ public class ControlScene {
         stage = (Stage) ((Node) ae.getSource()).getScene().getWindow();
         SinglePlayerHard sh = new SinglePlayerHard();
         sh.start(stage);
-        scene = new Scene(root);
-        stage.setScene(scene);
-        stage.show();
     }
 
     public void multiEasy(ActionEvent ae) {
@@ -122,9 +116,6 @@ public class ControlScene {
         stage = (Stage) ((Node) ae.getSource()).getScene().getWindow();
         MultiEasy me = new MultiEasy();
         me.start(stage);
-        scene = new Scene(root);
-        stage.setScene(scene);
-        stage.show();
 
     }
 
@@ -134,9 +125,6 @@ public class ControlScene {
         stage = (Stage) ((Node) ae.getSource()).getScene().getWindow();
         MultiHard mh = new MultiHard();
         mh.start(stage);
-        scene = new Scene(root);
-        stage.setScene(scene);
-        stage.show();
     }
 
     public void exit(ActionEvent ae) {

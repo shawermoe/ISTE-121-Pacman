@@ -12,7 +12,7 @@ import java.io.*;
 import java.net.*;
 import java.util.*;
 
-public class PacmanServer extends Application implements EventHandler<ActionEvent> {
+public class PacmanServer extends Application implements EventHandler<ActionEvent>, MultiplayerConstants {
     // Window Attributes
     private Stage stage;
     private Scene scene;
@@ -23,7 +23,6 @@ public class PacmanServer extends Application implements EventHandler<ActionEven
     private Button btnClear = new Button("Clear");
 
     // socket
-    private static final int SERVER_PORT = 1234;
     List<ObjectOutputStream> nameOfWriters = new ArrayList<>();
 
     int clientIDCounter = 0;

@@ -49,7 +49,7 @@ import java.io.*;
  * @author - Mohamed Amgad
  */
 
-public class MultiEasy extends Application implements EventHandler<KeyEvent> {
+public class MultiEasy extends Application implements EventHandler<KeyEvent>, MultiplayerConstants {
     // Window attributes
     private Stage stage;
     private StackPane root;
@@ -94,7 +94,6 @@ public class MultiEasy extends Application implements EventHandler<KeyEvent> {
     private Socket socket = null;
     private ObjectOutputStream oos = null;
     private ObjectInputStream ois = null;
-    private static final int SERVER_PORT = 1234;
 
     // ClientID attribute for ID Handling
     private int currentID = -1;
@@ -387,7 +386,7 @@ public class MultiEasy extends Application implements EventHandler<KeyEvent> {
     private void doConnect() {
         try {
             timer.start();
-            this.socket = new Socket("localhost", SERVER_PORT);
+            this.socket = new Socket(tfServer.getText(), SERVER_PORT);
             this.oos = new ObjectOutputStream(this.socket.getOutputStream());
             this.ois = new ObjectInputStream(this.socket.getInputStream());
 
